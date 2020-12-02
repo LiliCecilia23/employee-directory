@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import API from "../utils/API";
 
 class Table extends Component {
     
@@ -11,7 +12,7 @@ class Table extends Component {
                     <thead>
                         <tr>
                         <th scope="col"><button className="btn btn-info">ID</button></th>
-                        <th scope="col"><button className="btn btn-info">FIRST</button></th>
+                        <th scope="col"><button className="btn btn-info">NAME</button></th>
                         <th scope="col"><button className="btn btn-info">LAST</button></th>
                         <th scope="col"><button className="btn btn-info">ROLE</button></th>
                         <th scope="col"><button className="btn btn-info">SALARY</button></th>
