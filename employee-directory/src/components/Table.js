@@ -6,25 +6,34 @@ import API from "../utils/API";
 class Table extends Component {
     state = {
         employees: [],
-        // sortBy: id
+        sortBy: "first"
     };
 
     componentDidMount() {
        this.loadUsers();
     }  
     
-    handleBtnClick = event => {
-        const btnType = event.target.attributes.getNamedItem("data-value").value;
-        const newState = { ...this.state };
+    firstNameSort = () => {
+        const employees = this.state.employees.sort((a, b) =>
+          a.name.first.localeCompare(b.name.first)
+        );
+        this.setState({ employees: employees });
+    };
 
-        function sort(sortBy) {
-            
-        }
+    lastNameSort = () => {
+        const employees = this.state.employees.sort((a, b) =>
+          a.name.last.localeCompare(b.name.last)
+        );
+        this.setState({ employees: employees });
+    };
 
-        // if (btnType === "id") {
-        //     newState.sortBy = id;
-        // }
+    emailSort = () => {
+        const employees = this.state.employees.sort((a, b) =>
+          a.email.localeCompare(b.email)
+        );
+        this.setState({ employees: employees });
     }
+    
     loadUsers = () => {
         API.getRandomUsers()
         .then(res => this.setState({ employees: res.data.results}))
@@ -38,11 +47,11 @@ class Table extends Component {
                 <table className="table table-striped table-dark rounded">
                     <thead>
                         <tr>
-                        <th scope="col">PHOTO</th>
-                        <th scope="col"><button className="btn btn-info" data-value="first">FIRST</button></th>
-                        <th scope="col"><button className="btn btn-info" data-value="last">LAST</button></th>
-                        <th scope="col"><button className="btn btn-info" data-value="email">EMAIL</button></th>
-                        <th scope="col"><button className="btn btn-info" data-value="cell">CELL</button></th>
+                        <th scope="col" className="text-info">PHOTO</th>
+                        <th scope="col"><button className="btn btn-info" data-value="name.first" onClick={this.firstNameSort}>FIRST</button></th>
+                        <th scope="col"><button className="btn btn-info" data-value="name.last" onClick={this.lastNameSort}>LAST</button></th>
+                        <th scope="col"><button className="btn btn-info" data-value="email" onClick={this.emailSort}>EMAIL</button></th>
+                        <th scope="col" className="text-info">CELL</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,7 +59,7 @@ class Table extends Component {
                         {this.state.employees.map(employee => (
                             
                             <tr>
-                                <th scope="row"><img src={employee.picture.thumbnail} alt="employee" className="rounded"></img></th>
+                                <th scope="row" key={employee.email}><img src={employee.picture.thumbnail} alt="employee" className="rounded"></img></th>
                                 <td>{employee.name.first}</td>
                                 <td>{employee.name.last}</td>
                                 <td>{employee.email}</td>
