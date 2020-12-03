@@ -6,13 +6,11 @@ import API from "../utils/API";
 class Table extends Component {
     state = {
         employees: [],
-        sortBy: id
+        // sortBy: id
     };
 
     componentDidMount() {
-        API.getRandomUsers()
-          .then(res => this.setState({ employees: res.results }))
-          .catch(err => console.log(err));
+       this.loadUsers();
     }  
     
     handleBtnClick = event => {
@@ -23,11 +21,15 @@ class Table extends Component {
             
         }
 
-        if (btnType === "id") {
-            newState.sortBy = id;
-        }
+        // if (btnType === "id") {
+        //     newState.sortBy = id;
+        // }
     }
-
+    loadUsers = () => {
+        API.getRandomUsers()
+        .then(res => this.setState({ employees: res.data.results}))
+        .catch(err => console.log(err));
+    }
     
     render(){
         return(
@@ -44,7 +46,7 @@ class Table extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                    
+                        {console.log(this.state.employees)}
                         {this.state.employees.map(employee => (
                             
                             <tr>
